@@ -12,4 +12,3 @@ build/extension/bundle-size.json
 server/config.json
 scripts/script-settings.json
 coverage
-build/bundle.js
