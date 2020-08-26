@@ -9,7 +9,6 @@ import HapiSwagger from 'hapi-swagger';
 
 const config = require('./lib/config');
 const logger = require('./lib/logger');
-const plugins = require('./plugins');
 
 export default (cb) => {
   const goodPlugin = {
@@ -55,6 +54,7 @@ export default (cb) => {
     }
   });
 
+  const plugins = require('./plugins');
 
   server.register([ goodPlugin, Inert, Blipp, jwt, hapiSwaggerPlugin, ...plugins ], (err) => {
     if (err) {
