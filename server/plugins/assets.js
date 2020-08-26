@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 const register = (server, options, next) => {
   server.route({
@@ -22,4 +22,4 @@ register.attributes = {
   name: 'assets'
 };
 
-export default register;
+module.exports = register;

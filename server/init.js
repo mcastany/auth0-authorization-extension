@@ -1,12 +1,12 @@
-import config from './lib/config';
-import Database from './lib/storage/database';
-import { init as initDb } from './lib/storage/getdb';
-import { createProvider } from './lib/storage/providers';
+const config = require('./lib/config');
+const Database = require('./lib/storage/database');
+const { init: initDb } = require('./lib/storage/getdb');
+const createProvider = require('./lib/storage/providers');
 
-import createServer from './';
-import logger from './lib/logger';
+const createServer = require('./');
+const logger = require('./lib/logger');
 
-export default (cfg, storageContext, cb) => {
+module.exports = (cfg, storageContext, cb) => {
   if (cb == null) {
     cb = err => {
       if (err) {

@@ -1,7 +1,7 @@
-import Promise from 'bluebird';
-import request from 'superagent';
-import { managementApi } from 'auth0-extension-tools';
-import config from './config';
+const Promise = require('bluebird');
+const request = require('superagent');
+const { managementApi } = require('auth0-extension-tools');
+const config = require('./config');
 
 const apiIdentifier = 'urn:auth0-authz-api';
 const allScopes = [
@@ -62,13 +62,13 @@ const makeRequest = (req, path, method, payload) =>
     })
   );
 
-export const getApi = (req) =>
+const getApi = (req) =>
   makeRequest(req, 'resource-servers', 'GET').then((apis) => {
     const api = apis.filter((item) => item.identifier === apiIdentifier);
     return api[0] || {};
   });
 
-export const createApi = (req, lifeTime) => {
+const createApi = (req, lifeTime) => {
   const payload = {
     name: 'auth0-authorization-extension-api',
     identifier: apiIdentifier,
@@ -80,7 +80,7 @@ export const createApi = (req, lifeTime) => {
   return makeRequest(req, 'resource-servers', 'POST', payload);
 };
 
-export const updateApi = (req, lifeTime) =>
+const updateApi = (req, lifeTime) =>
   getApi(req).then((api) => {
     const defaultLifetimeValue = 86400;
 
@@ -93,7 +93,7 @@ export const updateApi = (req, lifeTime) =>
     });
   });
 
-export const deleteApi = (req, silent) =>
+const deleteApi = (req, silent) =>
   getApi(req).then((api) => {
     if (api.id) {
       return makeRequest(req, `resource-servers/${api.id}`, 'DELETE');
@@ -108,4 +108,13 @@ export const deleteApi = (req, silent) =>
     return Promise.resolve();
   });
 
-export const scopes = allScopes;
+const scopes = allScopes;
+
+
+module.exports = {
+  scopes,
+  getApi,
+  createApi,
+  updateApi,
+  deleteApi
+};

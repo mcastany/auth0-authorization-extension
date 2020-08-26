@@ -1,9 +1,9 @@
-import Promise from 'bluebird';
+const Promise = require('bluebird');
 
 const idle = (timeout) =>
   new Promise((resolve) => setTimeout(() => resolve(), timeout * 1000));
 
-export default (context, promise, args, retry = 2) => {
+module.exports = (context, promise, args, retry = 2) => {
   let retriesLeft = retry;
 
   const tryRequest = () =>

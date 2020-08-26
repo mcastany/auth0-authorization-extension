@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import Promise from 'bluebird';
-import { ArgumentError, ValidationError } from 'auth0-extension-tools';
-import config from '../config';
+const _ = require('lodash');
+const Promise = require('bluebird');
+const { ArgumentError, ValidationError } = require('auth0-extension-tools');
+const config = require('../config');
 
 const checkUnique = (
   items = [],
@@ -20,7 +20,7 @@ const checkUnique = (
   return Promise.reject(new ValidationError(errorMessage));
 };
 
-export default class Database {
+module.exports = class Database {
   constructor(options = {}) {
     if (!options.provider) {
       throw new ArgumentError(
@@ -238,4 +238,4 @@ export default class Database {
   updateApplication(clientId, application) {
     return this.provider.update('applications', clientId, application, true);
   }
-}
+};

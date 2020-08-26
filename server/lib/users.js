@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import async from 'async';
-import Promise from 'bluebird';
-import apiCall from './apiCall';
+const _ = require('lodash');
+const async = require('async');
+const Promise = require('bluebird');
+const apiCall = require('./apiCall');
 
-export function getUsersById(client, ids, page, limit) {
+module.exports = function getUsersById(client, ids, page, limit) {
   return new Promise((resolve, reject) => {
     const users = [];
     const total = ids.length;
@@ -42,4 +42,4 @@ export function getUsersById(client, ids, page, limit) {
       }
     );
   });
-}
+};

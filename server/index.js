@@ -1,17 +1,17 @@
-import Hapi from '@auth0/hapi';
-import Good from 'good';
-import Inert from 'inert';
-import Relish from 'relish';
-import Blipp from 'blipp';
-import jwt from 'hapi-auth-jwt2';
-import GoodConsole from 'good-console';
-import HapiSwagger from 'hapi-swagger';
+const Hapi = require('@auth0/hapi');
+const Good = require('good');
+const Inert = require('inert');
+const Relish = require('relish');
+const Blipp = require('blipp');
+const jwt = require('hapi-auth-jwt2');
+const GoodConsole = require('good-console');
+const HapiSwagger = require('hapi-swagger');
 
-import config from './lib/config';
-import logger from './lib/logger';
-import plugins from './plugins';
+const config = require('./lib/config');
+const logger = require('./lib/logger');
+const plugins = require('./plugins');
 
-export default (cb) => {
+module.exports = (cb) => {
   const goodPlugin = {
     register: Good,
     options: {

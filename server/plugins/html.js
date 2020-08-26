@@ -1,10 +1,10 @@
-import fs from 'fs';
-import ejs from 'ejs';
-import path from 'path';
-import { urlHelpers } from 'auth0-extension-hapi-tools';
+const fs = require('fs');
+const ejs = require('ejs');
+const path = require('path');
+const { urlHelpers } = require('auth0-extension-hapi-tools');
 
-import config from '../lib/config';
-import template from '../views/index';
+const config = require('../lib/config');
+const template = require('../views/index');
 
 const assembleHtmlRoute = (link) => ({
   method: 'GET',
@@ -103,4 +103,4 @@ register.attributes = {
   name: 'html'
 };
 
-export default register;
+module.exports = register;

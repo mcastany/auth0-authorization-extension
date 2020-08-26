@@ -1,4 +1,4 @@
-import { getDb } from '../lib/storage/getdb';
+const { getDb } = require('../lib/storage/getdb');
 
 const register = (server, options, next) => {
   const db = getDb();
@@ -12,4 +12,4 @@ register.attributes = {
   name: 'storage'
 };
 
-export default register;
+module.exports = register;

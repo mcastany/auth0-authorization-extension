@@ -1,11 +1,11 @@
-import crypto from 'crypto';
-import config from './config';
+const crypto = require('crypto');
+const config = require('./config');
 
 const hashApiKey = (key) => crypto.createHmac('sha256', `${key} + ${config('AUTH0_CLIENT_SECRET')}`)
   .update(config('EXTENSION_SECRET'))
   .digest('hex');
 
-export default (storage, auth0) => {
+module.exports = (storage, auth0) => {
   const key = crypto.randomBytes(32).toString('hex');
   const hash = hashApiKey(key);
 

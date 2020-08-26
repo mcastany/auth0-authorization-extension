@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import nconf from 'nconf';
-import Promise from 'bluebird';
-import memoizer from 'lru-memoizer';
-import multipartRequest from './multipartRequest';
+const _ = require('lodash');
+const nconf = require('nconf');
+const Promise = require('bluebird');
+const memoizer = require('lru-memoizer');
+const multipartRequest = require('./multipartRequest');
 
 const avoidBlock = (action) => (...args) =>
   new Promise((resolve, reject) => {
@@ -24,7 +24,7 @@ const compact = (entity) => ({
 /*
  * Cache connections.
  */
-export const getConnectionsCached = memoizer({
+const getConnectionsCached = memoizer({
   load: (auth0, callback) => {
     multipartRequest(auth0, 'connections', { fields: 'id,name,strategy' })
       .then((connections) =>
@@ -43,7 +43,7 @@ export const getConnectionsCached = memoizer({
 /*
  * Cache permissions.
  */
-export const getPermissionsCached = memoizer({
+const getPermissionsCached = memoizer({
   load: (db, callback) => {
     db.getPermissions()
       .then((permissions) => {
@@ -59,7 +59,7 @@ export const getPermissionsCached = memoizer({
 /*
  * Cache roles.
  */
-export const getRolesCached = memoizer({
+const getRolesCached = memoizer({
   load: (db, callback) => {
     db.getRoles()
       .then((roles) => {
@@ -75,7 +75,7 @@ export const getRolesCached = memoizer({
 /*
  * Cache groups.
  */
-export const getGroupsCached = memoizer({
+const getGroupsCached = memoizer({
   load: (db, callback) => {
     db.getGroups()
       .then((groups) => {
@@ -91,7 +91,7 @@ export const getGroupsCached = memoizer({
 /*
  * Get the full connection names for all mappings.
  */
-export const getMappingsWithNames = (auth0, groupMappings) =>
+const getMappingsWithNames = (auth0, groupMappings) =>
   new Promise((resolve, reject) => {
     getConnectionsCached(auth0, (err, connections) => {
       if (err) {
@@ -115,7 +115,7 @@ export const getMappingsWithNames = (auth0, groupMappings) =>
 /*
  * Resolve all child groups.
  */
-export const getChildGroups = (groups, selectedGroups) => {
+const getChildGroups = (groups, selectedGroups) => {
   const groupsFlat = [];
 
   // Recursive method to find roles.
@@ -144,7 +144,7 @@ export const getChildGroups = (groups, selectedGroups) => {
 /*
  * Resolve all parent groups.
  */
-export const getParentGroups = (groups, selectedGroups) => {
+const getParentGroups = (groups, selectedGroups) => {
   const groupsFlat = [];
 
   // Recursive method to find roles.
@@ -171,7 +171,7 @@ export const getParentGroups = (groups, selectedGroups) => {
 /*
  * Resolve all roles for a list of groups.
  */
-export const getRolesForGroups = (selectedGroups, selectedRoles) => {
+const getRolesForGroups = (selectedGroups, selectedRoles) => {
   const result = [];
   const groups = {};
   selectedGroups.forEach((group) => {
@@ -197,7 +197,7 @@ export const getRolesForGroups = (selectedGroups, selectedRoles) => {
 /*
  * Get all roles for a user.
  */
-export const getRolesForUser = (database, userId) =>
+const getRolesForUser = (database, userId) =>
   database
     .getGroups()
     .then((groups) => {
@@ -226,7 +226,7 @@ export const getRolesForUser = (database, userId) =>
 /*
  * Get all permissions for list of roles.
  */
-export const getPermissionsForRoles = (database, userRoles) =>
+const getPermissionsForRoles = (database, userRoles) =>
   database.getPermissions().then((permissions) => {
     const permIds = _.flattenDeep(_.map(userRoles, (role) => role.permissions));
     return permissions.filter((permission) =>
@@ -237,7 +237,7 @@ export const getPermissionsForRoles = (database, userRoles) =>
 /*
  * Get all permissions for list of roles, grouped by role.
  */
-export const getPermissionsByRoles = (database, roles) =>
+const getPermissionsByRoles = (database, roles) =>
   new Promise((resolve, reject) => {
     getPermissionsCached(database, (err, permissions) => {
       if (err) {
@@ -267,7 +267,7 @@ export const getPermissionsByRoles = (database, roles) =>
 /*
  * Resolve all users for a list of groups.
  */
-export const getMembers = (selectedGroups) => {
+const getMembers = (selectedGroups) => {
   const users = {};
 
   // Process the user's groups.
@@ -307,7 +307,7 @@ const matchMappings = (mappings, connectionName, groupMemberships) =>
 /*
  * Calculate dynamic group memberships.
  */
-export function getDynamicUserGroups(
+function getDynamicUserGroups(
   db,
   connectionName,
   groupMemberships,
@@ -346,7 +346,7 @@ export function getDynamicUserGroups(
 /*
  * Get the groups a user belongs to.
  */
-export function getUserGroups(db, userId, connectionName, groupMemberships) {
+function getUserGroups(db, userId, connectionName, groupMemberships) {
   if (
     !Array.isArray(groupMemberships) ||
     groupMemberships === undefined ||
@@ -388,7 +388,7 @@ export function getUserGroups(db, userId, connectionName, groupMemberships) {
 /*
  * Get expanded group data
  */
-export function getGroupExpanded(db, groupId) {
+function getGroupExpanded(db, groupId) {
   return new Promise((resolve, reject) => {
     getGroupsCached(db, (error, groups) => {
       if (error) {
@@ -433,7 +433,7 @@ export function getGroupExpanded(db, groupId) {
 /*
  * Get expanded group data
  */
-export function getGroupsExpanded(db, groups) {
+function getGroupsExpanded(db, groups) {
   return new Promise((resolve, reject) => {
     getGroupsCached(db, (error, allGroups) => {
       if (error) {
@@ -472,7 +472,7 @@ export function getGroupsExpanded(db, groups) {
 /*
  * Get all user's groups, roles and permissions
  */
-export function getUserData(
+function getUserData(
   db,
   userId,
   clientId,
@@ -545,3 +545,23 @@ export function getUserData(
       );
   });
 }
+
+module.exports = {
+  getConnectionsCached,
+  getPermissionsCached,
+  getRolesCached,
+  getGroupsCached,
+  getMappingsWithNames,
+  getChildGroups,
+  getParentGroups,
+  getRolesForGroups,
+  getRolesForUser,
+  getPermissionsForRoles,
+  getPermissionsByRoles,
+  getMembers,
+  getDynamicUserGroups,
+  getUserGroups,
+  getGroupExpanded,
+  getGroupsExpanded,
+  getUserData
+};

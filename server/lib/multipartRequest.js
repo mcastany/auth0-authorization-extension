@@ -1,9 +1,9 @@
-import Promise from 'bluebird';
-import { ArgumentError } from 'auth0-extension-tools';
+const Promise = require('bluebird');
+const { ArgumentError } = require('auth0-extension-tools');
 
-import apiCall from './apiCall';
+const apiCall = require('./apiCall');
 
-export default function(
+module.exports = function(
   client,
   entity,
   opts = {},
@@ -58,4 +58,4 @@ export default function(
     });
 
   return getAll().then(() => result);
-}
+};

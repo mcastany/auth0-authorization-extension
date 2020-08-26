@@ -1,9 +1,9 @@
-import ejs from 'ejs';
-import config from './config';
-import generateApiKey from './generateApiKey';
-import authorizeRule from './rules/authorize';
+const ejs = require('ejs');
+const config = require('./config');
+const generateApiKey = require('./generateApiKey');
+const authorizeRule = require('./rules/authorize');
 
-export default (storage, auth0, configuration = { }, userName = '') =>
+module.exports = (storage, auth0, configuration = { }, userName = '') =>
   storage.getApiKey()
     .then((key) => {
       if (!key) {
