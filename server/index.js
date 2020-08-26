@@ -54,7 +54,13 @@ export default (cb) => {
     }
   });
 
-  const plugins = require('./plugins');
+  console.log('asdaasdasd');
+  var plugins;
+  try {
+    plugins = require('./plugins');
+  } catch(e){
+    console.log('exeception', e)
+  }
 
   server.register([ goodPlugin, Inert, Blipp, jwt, hapiSwaggerPlugin, ...plugins ], (err) => {
     if (err) {
