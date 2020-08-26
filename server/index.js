@@ -7,8 +7,9 @@ import jwt from 'hapi-auth-jwt2';
 import GoodConsole from 'good-console';
 import HapiSwagger from 'hapi-swagger';
 
-import config from './lib/config';
-import logger from './lib/logger';
+const config = require('./lib/config');
+const logger = require('./lib/logger');
+const plugins = require('./plugins');
 
 export default (cb) => {
   const goodPlugin = {
@@ -54,9 +55,6 @@ export default (cb) => {
     }
   });
 
-  console.log('asasdasdsadasdsa')
-
-  const plugins = require('./plugins');
 
   server.register([ goodPlugin, Inert, Blipp, jwt, hapiSwaggerPlugin, ...plugins ], (err) => {
     if (err) {
