@@ -1,4 +1,4 @@
-import { getDb } from '../lib/storage/getdb';
+const { getDb } = require('../lib/storage/getdb');
 
 module.exports.register = (server, options, next) => {
   const db = getDb();

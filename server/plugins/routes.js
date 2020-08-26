@@ -1,4 +1,4 @@
-import config from '../lib/config';
+const config = require('../lib/config');
 
 module.exports.register = (server, options, next) => {
   server.route(require('../api/policy/routes/post_user')(server));

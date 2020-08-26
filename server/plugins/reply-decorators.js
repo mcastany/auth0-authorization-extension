@@ -1,5 +1,5 @@
-import Boom from 'boom';
-import logger from '../lib/logger';
+const Boom = require('boom');
+const logger = require('../lib/logger');
 
 function notFound(message) {
   return this.response(Boom.notFound(message));

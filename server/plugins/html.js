@@ -3,8 +3,8 @@ import ejs from 'ejs';
 import path from 'path';
 import { urlHelpers } from 'auth0-extension-hapi-tools';
 
-import config from '../lib/config';
-import template from '../views/index';
+const config = require('../lib/config');
+const template = require('../views/index');
 
 const assembleHtmlRoute = (link) => ({
   method: 'GET',
