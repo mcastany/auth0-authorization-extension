@@ -1,6 +1,6 @@
-const config = require('../lib/config');
+import config from '../lib/config';
 
-module.exports.register = (server, options, next) => {
+const register = (server, options, next) => {
   server.route(require('../api/policy/routes/post_user')(server));
   server.route(require('../api/applications/routes/get_application')(server));
   server.route(require('../api/applications/routes/get_applications')(server));
@@ -66,6 +66,8 @@ module.exports.register = (server, options, next) => {
   next();
 };
 
-module.exports.register.attributes = {
+register.attributes = {
   name: 'routes'
 };
+
+export default register;

@@ -1,17 +1,17 @@
-const Boom = require('boom');
-const crypto = require('crypto');
-const jwksRsa = require('jwks-rsa');
-const jwt = require('jsonwebtoken');
-const tools = require('auth0-extension-hapi-tools');
+import Boom from 'boom';
+import crypto from 'crypto';
+import jwksRsa from 'jwks-rsa';
+import jwt from 'jsonwebtoken';
+import * as tools from 'auth0-extension-hapi-tools';
 
-const config = require('../lib/config');
-const { scopes } = require('../lib/apiaccess');
+import config from '../lib/config';
+import { scopes } from '../lib/apiaccess';
 
 const hashApiKey = (key) => crypto.createHmac('sha256', `${key} + ${config('AUTH0_CLIENT_SECRET')}`)
   .update(config('EXTENSION_SECRET'))
   .digest('hex');
 
-module.exports.register = (server, options, next) => {
+const register = (server, options, next) => {
   server.auth.scheme('extension-secret', () =>
     ({
       authenticate: (request, reply) => {
@@ -147,6 +147,8 @@ module.exports.register = (server, options, next) => {
   });
 };
 
-module.exports.register.attributes = {
+register.attributes = {
   name: 'auth'
 };
+
+export default register;

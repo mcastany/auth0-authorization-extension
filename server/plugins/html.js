@@ -3,8 +3,8 @@ import ejs from 'ejs';
 import path from 'path';
 import { urlHelpers } from 'auth0-extension-hapi-tools';
 
-const config = require('../lib/config');
-const template = require('../views/index');
+import config from '../lib/config';
+import template from '../views/index';
 
 const assembleHtmlRoute = (link) => ({
   method: 'GET',
@@ -93,12 +93,14 @@ const clientRoutes = [
   '/import-export'
 ];
 
-module.exports.register = (server, options, next) => {
+const register = (server, options, next) => {
   clientRoutes.map(link => server.route(assembleHtmlRoute(link)));
 
   next();
 };
 
-module.exports.register.attributes = {
+register.attributes = {
   name: 'html'
 };
+
+export default register;
