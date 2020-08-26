@@ -62,8 +62,6 @@
       "winston@1.0.0"
     ],
     "nodeTarget": "8.0.0",
-    "bundleModules": true,
-    "useBabel": true,
     "settings": {
       "WARN_DB_SIZE": 409600,
       "MAX_MULTISELECT_USERS": 5,
