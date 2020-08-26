@@ -43,6 +43,7 @@ export default (cb) => {
 
   const relishPlugin = Relish({ });
 
+  console.log('create hapi server')
   const server = new Hapi.Server();
   server.connection({
     host: 'localhost',
@@ -54,7 +55,11 @@ export default (cb) => {
       }
     }
   });
+
+  console.log('before server register')
+
   server.register([ goodPlugin, Inert, Blipp, jwt, hapiSwaggerPlugin, ...plugins ], (err) => {
+    console.log('after server register')
     if (err) {
       return cb(err, null);
     }
